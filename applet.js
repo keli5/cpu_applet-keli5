@@ -32,6 +32,15 @@ class CinnamonCPUApplet extends Applet.TextIconApplet {
             return lscpu.split("\n");
         }
 
+        function ghz_or_mhz(value) {
+            if (value > 1000) {
+                value = (value / 1000).toFixed(2) + " GHz"
+            } else {
+                value = value.toFixed(0) + " MHz"
+            }
+            return value
+        }
+
         function get_cpu_speed() {
             
             lscpu().some(function (el) {
@@ -42,11 +51,7 @@ class CinnamonCPUApplet extends Applet.TextIconApplet {
             });
             cpu_spd_line = cpu_spd_line.substring(8).trimLeft()
             cpu_spd_line = Number(cpu_spd_line)
-            if (cpu_spd_line > 1000) {
-                cpu_spd_line = (cpu_spd_line / 1000).toFixed(2) + " GHz"
-            } else {
-                cpu_spd_line = cpu_spd_line.toFixed(0) + " MHz"
-            }
+            cpu_spd_line = ghz_or_mhz(cpu_spd_line)
 
             this.set_applet_label(cpu_spd_line)
             Mainloop.timeout_add_seconds(10, Lang.bind(this, get_cpu_speed));
