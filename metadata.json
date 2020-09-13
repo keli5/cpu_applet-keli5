@@ -1,0 +1,5 @@
+{
+    "description": "Access CPU information",
+    "uuid": "cpu_applet@keli5",
+    "name": "CPU Info Applet"
+}
