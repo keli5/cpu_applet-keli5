@@ -24,16 +24,17 @@ function backtick(command) {
 class CinnamonCPUApplet extends Applet.TextIconApplet {
     constructor(metadata, orientation, panel_height, instanceId) {
         super(orientation, panel_height, instanceId);
-        let lscpu;
         let cpu_spd_line;
         this.set_applet_icon_name("chip");
 
+        function lscpu() {
+            let lscpu = backtick("lscpu");
+            return lscpu.split("\n");
+        }
 
         function get_cpu_speed() {
-            lscpu = backtick("lscpu");
-            lscpu = lscpu.split("\n");
-
-            lscpu.some(function (el) {
+            
+            lscpu().some(function (el) {
                 if (el.startsWith("CPU MHz:")) {
                     cpu_spd_line = el;
                     return true;
